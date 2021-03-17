@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<style type="text/css">
+		@-webkit-keyframes slideIn {
+			0% {
+				transform: translateX(-900px);
+			}
+			100% {
+				transform: translateX(0);
+			}
+		}
+		@-moz-keyframes slideIn {
+			0% {
+				transform: translateX(-900px);
+			}
+			100% {
+				transform: translateX(0);
+			}
+		}
+		@keyframes slideIn {
+			0% {
+				transform: translateX(-900px);
+			}
+			100% {
+				transform: translateX(0);
+			}
+		}
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		.row {
+			/* height: 35px;
+        width: 35px; */
+			display: flex;
+		}
+		#world {
+			position: absolute;
+			top: 0%;
+			left: 0%;
+		}
+		.grass {
+			background-color: #eeede7;
+			background-image: url("grass.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			margin: 0;
+			opacity: 0.85;
+			z-index: 211;
+		}
+		.brick {
+			background-image: url("brick1.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			margin: 0;
+		}
+		.brick2 {
+			background-image: url("brick2.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			margin: 0;
+		}
+		.brick3 {
+			background-image: url("brick3.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			margin: 0;
+		}
+		.steelWall {
+			background-image: url("steelwall1.jpg");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 35px;
+			height: 35px;
+			width: 35px;
+			margin: 0;
+		}
+		.trophy {
+			background-image: url("trophy.gif");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			margin: 0;
+			z-index: 150;
+		}
+		.path {
+			background-color: #eeede7;
+			height: 35px;
+			width: 35px;
+			margin: 0;
+		}
+		.explosion {
+			background-image: url("explosion.gif");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			position: absolute;
+			z-index: 111;
+		}
+		.bullets1 {
+			background-image: url("bullettop.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			position: absolute;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			right: calc(100% - 100px);
+			/* z-index: 11; */
+		}
+		.bullets2 {
+			background-image: url("bulletright.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			position: absolute;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			position: absolute;
+			right: calc(100% - 100px);
+			z-index: 11;
+		}
+		.bullets3 {
+			background-image: url("bulletdown.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			position: absolute;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			position: absolute;
+			right: calc(100% - 100px);
+			z-index: 11;
+		}
+		.bullets4 {
+			background-image: url("bulletleft.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			position: absolute;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			position: absolute;
+			right: calc(100% - 100px);
+			z-index: 11;
+		}
+		.enemyBullet1 {
+			background-image: url("enemybullettop.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			position: absolute;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			right: calc(100% - 100px);
+			z-index: 11;
+		}
+		.enemyBullet2 {
+			background-image: url("enemybulletright.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			position: absolute;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			right: calc(100% - 100px);
+			/* z-index: 11; */
+		}
+		.enemyBullet3 {
+			background-image: url("enemybulletdown.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			position: absolute;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			right: calc(100% - 100px);
+			/* z-index: 11; */
+		}
+		.enemyBullet4 {
+			background-image: url("enemybulletleft.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 35px;
+			width: 35px;
+			position: absolute;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			right: calc(100% - 100px);
+			/* z-index: 11; */
+		}
+		.eagle1 {
+		}
+		.eagle2 {
+		}
+		.enemyHP5,
+		.heroHP5,
+		.trophyHP5 {
+			margin-top: 32px;
+			width: 35px;
+			height: 4px;
+			background-color: green;
+		}
+		.enemyHP4,
+		.heroHP4,
+		.trophyHP4 {
+			margin-top: 32px;
+			width: 27px;
+			height: 4px;
+			background-color: rgb(58, 128, 0);
+		}
+		.enemyHP3,
+		.heroHP3,
+		.trophyHP3 {
+			margin-top: 32px;
+			width: 21px;
+			height: 4px;
+			background-color: rgb(128, 126, 0);
+		}
+		.enemyHP2,
+		.heroHP2,
+		.trophyHP2 {
+			margin-top: 32px;
+			width: 15px;
+			height: 4px;
+			background-color: rgb(128, 68, 0);
+		}
+		.enemyHP1,
+		.heroHP1,
+		.trophyHP1 {
+			margin-top: 32px;
+			width: 7px;
+			height: 4px;
+			background-color: rgb(128, 11, 0);
+		}
+		.enemy1 {
+			background-image: url("enemy1up.gif");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			position: absolute;
+			height: 35px;
+			width: 35px;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			right: calc(100% - 70px);
+			z-index: 11;
+		}
+		.enemy2 {
+			background-image: url("enemy1right.gif");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			position: absolute;
+			height: 35px;
+			width: 35px;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			right: calc(100% - 100px);
+			z-index: 11;
+		}
+		.enemy4 {
+			background-image: url("enemy1left.gif");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			position: absolute;
+			height: 35px;
+			width: 35px;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			right: calc(100% - 100px);
+		}
+		.enemy3 {
+			background-image: url("enemy1down.gif");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			position: absolute;
+			height: 35px;
+			width: 35px;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			position: absolute;
+			right: calc(100% - 100px);
+			z-index: 11;
+		}
+		#hero {
+			background-image: url("herotanktop.gif");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			position: absolute;
+			height: 35px;
+			width: 35px;
+			transition: 0.4s;
+			right: calc(100% - 100px);
+			z-index: 110;
+		}
+		#blackScreen {
+			background-color: black;
+			opacity: 0.68;
+			height: 980px;
+			width: 945px;
+			position: absolute;
+			z-index: 1000;
+			top: 0%;
+			left: 0%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-family: "Poppins";
+		}
+		#blackScreen > div {
+			text-align: center;
+		}
+		#blackScreen > div > h1 {
+			font-size: 100px;
+			color: white;
+		}
+		#blackScreen > div > h4 {
+			font-size: 35px;
+			color: white;
+		}
+		.scoreBoard {
+			position: absolute;
+			left: 1000px;
+			top: 50px;
+			border: 1px solid black;
+			padding: 50px;
+		}
+		.scoreBoard > div > img {
+			height: 75px;
+			object-fit: contain;
+		}
+		.scoreBoard > div {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+		}
+		.scoreBoard > div > div > h5 {
+			font-family: "Poppins";
+			margin: 0;
+			font-size: 30px;
+		}
+		.scoreBoard > div > div > h5 > span {
+			font-weight: 800;
+		}
+	</style>
+	<body>
+		<div id="container">
+			<div id="world"></div>
+			<div id="enemyContainer">
+				<div
+					id="enemy0"
+					class="enemy3 heroEnemy"
+					style="left: 630px; top: 35px"
+				>
+					<div class="enemyHP5"></div>
+				</div>
+				<div
+					id="enemy1"
+					class="enemy3 heroEnemy"
+					style="left: 315px; top: 35px"
+				>
+					<div class="enemyHP5"></div>
+				</div>
+				<div
+					id="enemy2"
+					class="enemy3 heroEnemy"
+					style="left: 385px; top: 420px"
+				>
+					<div class="enemyHP5"></div>
+				</div>
+				<div
+					id="enemy3"
+					class="enemy3 heroEnemy"
+					style="left: 210px; top: 35px"
+				>
+					<div class="enemyHP5"></div>
+				</div>
+			</div>
+			<div id="heroContainer">
+				<div id="hero" style="left: 385px; top: 910px">
+					<div class="heroHP5"></div>
+				</div>
+			</div>
+			<div id="bulletsContainer"></div>
+			<div id="enemyBulletsContainer"></div>
+			<div id="trophyContainer"></div>
+			<div id="blackScreen">
+				<div>
+					<h1 id="statusText">PLAY GAME</h1>
+					<h4>Press ENTER KEY</h4>
+				</div>
+			</div>
+			<div class="scoreBoard">
+				<div>
+					<img src="herotanktop.gif" alt="" />
+					<div>
+						<h5>HERO TANK HP: <span id="heroHPStatus">0</span></h5>
+						<!-- <h5>ENEMY KILLS: <span id="enemyKills">0</span></h5> -->
+					</div>
+				</div>
+				<div>
+					<img src="trophy.gif" alt="" />
+					<div>
+						<h5>TROPHY HEALTH: <span id="trophyHealth">0</span></h5>
+					</div>
+				</div>
+				<div>
+					<img src="enemy1up.gif" alt="" />
+					<div>
+						<h5>ENEMY TANK LEFT: <span id="enemyLeft">0</span></h5>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		const worldContainer = document.querySelector("#world");
+		const hero = document.querySelector("#hero");
+		const bulletsContainer = document.querySelector("#bulletsContainer");
+		const heroContainer = document.querySelector("#heroContainer");
+		const enemyBulletsContainer = document.querySelector(
+			"#enemyBulletsContainer"
+		);
+		const mainContainer = document.querySelector("#container");
+		const enemyContainer = document.querySelector("#enemyContainer");
+		const heroEnemy = document.querySelectorAll(".heroEnemy");
+		const trophyContainer = document.querySelector("#trophyContainer");
+		const blackScreen = document.querySelector("#blackScreen");
+        let world = [
+            [{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n :'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n :'b1', h :3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n :'b1', h :3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'pw'},{n:'gr'},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'sw', h: 'i'},{n:'gr'},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n:'gr'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n:'gr'},{n: 'pw'},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n:'gr'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n:'gr'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n:'gr'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n:'gr'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n:'gr'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n:'gr'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n:'gr'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n:'gr'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n:'gr'},{n:'gr'},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'pw'},{n:'gr'},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n:'gr'},{n: 'pw'},{n:'gr'},{n: 'b1' , h: 3},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n:'gr'},{n: 'pw'},{n:'gr'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n:'gr'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n: 'sw', h: 'i'},{n:'gr'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n: 'sw', h: 'i'},{n:'gr'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n: 'sw', h: 'i'},{n:'gr'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n:'gr'},{n: 'b1' , h: 3},{n: 'sw', h: 'i'},{n:'gr'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'tp', hp: 5},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n:'gr'},{n:'gr'},{n: 'b1' , h: 3},{n: 'pw'},{n: 'b1' , h: 3},{n: 'b1' , h: 3},{n: 'pw'},{n: 'pw'},{n: 'b1' , h: 3},{n: 'sw', h: 'i'}],
+            [{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'},{n: 'sw', h: 'i'}],
+        ];
+		let trophyHealth = {
+			x: 13,
+			y: 26,
+		};
+		let heroTankXY = {
+			x: 11,
+			y: 26,
+			hp: 5,
+		};
+		let enemies = [
+			{ x: 18, y: 1, hp: 5, p: 3, name: "e1" },
+			{ x: 9, y: 1, hp: 5, p: 3, name: "e2" },
+			{ x: 11, y: 12, hp: 5, p: 3, name: "e3" },
+			{ x: 6, y: 1, hp: 5, p: 3, name: "e4" },
+		];
+		let enemyDirection = ["goTop", "goRight", "goBottom", "goLeft"];
+		let heroBullets = [];
+		let enemiesBullet = [];
+		let bulletPosition = "";
+		let enemiesBulletPosition = "";
+		let start = 0;
+
+		function updateEnemyXYMovement() {
+			for (let i = 0; i < enemies.length; i++) {
+				if (enemyContainer.children.length) {
+					if (enemies[i].hp !== 0) {
+						heroEnemy[i].setAttribute(
+							"class",
+							`heroEnemy enemy${enemies[i]?.p}`
+						);
+						heroEnemy[i].style.left = `${enemies[i]?.x * 35}px`;
+						heroEnemy[i].style.top = `${enemies[i]?.y * 35}px`;
+						heroEnemy[
+							i
+						].innerHTML = `<div class="enemyHP${enemies[i]?.hp}"></div>`;
+					} else {
+						heroEnemy[i].remove();
+						enemies.splice(i, 1);
+					}
+				}
+			}
+		}
+
+		function enemyCollideEachOther(tank, index) {
+			let collided = true;
+			for (let i = 0; i < enemies.length; i++) {
+				if (i !== index) {
+					if (enemies[i].x - 1 === tank.x) {
+						collided = false;
+					}
+				}
+			}
+			return false;
+		}
+
+		function displayEnemiesBullets() {
+			let enemiesBulletHtml = "";
+			for (let i = 0; i < enemiesBullet.length; i++) {
+				enemiesBulletHtml += `<div class='enemyBullet${
+					enemiesBullet[i].position
+				}' style='top:${enemiesBullet[i].y * 35}px; left:${
+					enemiesBullet[i].x * 35
+				}px;'></div>`;
+			}
+			enemyBulletsContainer.innerHTML = enemiesBulletHtml;
+		}
+
+		function moveEnemiesBullets() {
+			for (let i = 0; i < enemiesBullet.length; i++) {
+				if (enemiesBullet[i].position === 1) {
+					enemiesBullet[i].y -= 1;
+				} else if (enemiesBullet[i].position === 2) {
+					enemiesBullet[i].x += 1;
+				} else if (enemiesBullet[i].position === 3) {
+					enemiesBullet[i].y += 1;
+				} else if (enemiesBullet[i].position === 4) {
+					enemiesBullet[i].x -= 1;
+				}
+			}
+		}
+
+		function gameStatus() {
+			document.querySelector("#statusText").innerHTML = ``;
+			document.querySelector("#heroHPStatus").innerHTML = heroTankXY.hp;
+			document.querySelector("#trophyHealth").innerHTML =
+				world[trophyHealth.y][trophyHealth.x].hp;
+			document.querySelector("#enemyLeft").innerHTML = enemies.length;
+		}
+
+		function updateEnemyMovement() {
+			let enemyWillNotCollideToLeftSide = false;
+			let enemyWillNotCollideToRightSide = false;
+			let enemyWillNotCollideToTopSide = false;
+			let enemyWillNotCollideToBottomSide = false;
+
+			for (let index = 0; index < enemies.length; index++) {
+				if (enemies[index].hp !== 0) {
+					let direction = enemyDirection[Math.floor(Math.random() * 3) + 1];
+					// let direction = 'goBottom';
+					if (index === 0) {
+						enemyWillNotCollideToLeftSide =
+							enemies[1]?.x !== enemies[index]?.x - 1 &&
+							true &&
+							enemies[2]?.x !== enemies[index]?.x - 1 &&
+							true &&
+							enemies[3]?.x !== enemies[index]?.x - 1 &&
+							true;
+						enemyWillNotCollideToTopSide =
+							enemies[1]?.y !== enemies[index]?.y - 1 &&
+							true &&
+							enemies[2]?.y !== enemies[index]?.y - 1 &&
+							true &&
+							enemies[3]?.y !== enemies[index]?.y - 1 &&
+							true;
+						enemyWillNotCollideToRightSide =
+							enemies[1]?.x !== enemies[index]?.x + 1 &&
+							true &&
+							enemies[2]?.x !== enemies[index]?.x + 1 &&
+							true &&
+							enemies[3]?.x !== enemies[index]?.x + 1 &&
+							true;
+						enemyWillNotCollideToBottomSide =
+							enemies[1]?.y !== enemies[index]?.y + 1 &&
+							true &&
+							enemies[2]?.y !== enemies[index]?.y + 1 &&
+							true &&
+							enemies[3]?.y !== enemies[index]?.y + 1 &&
+							true;
+					} else if (index === 1) {
+						enemyWillNotCollideToLeftSide =
+							enemies[0].x !== enemies[index]?.x - 1 &&
+							true &&
+							enemies[2]?.x !== enemies[index]?.x - 1 &&
+							true &&
+							enemies[3]?.x !== enemies[index]?.x - 1 &&
+							true;
+						enemyWillNotCollideToTopSide =
+							enemies[0].y !== enemies[index]?.y - 1 &&
+							true &&
+							enemies[2]?.y !== enemies[index]?.y - 1 &&
+							true &&
+							enemies[3]?.y !== enemies[index]?.y - 1 &&
+							true;
+						enemyWillNotCollideToRightSide =
+							enemies[0].x !== enemies[index]?.x + 1 &&
+							true &&
+							enemies[2]?.x !== enemies[index]?.x + 1 &&
+							true &&
+							enemies[3]?.x !== enemies[index]?.x + 1 &&
+							true;
+						enemyWillNotCollideToBottomSide =
+							enemies[0].y !== enemies[index]?.y + 1 &&
+							true &&
+							enemies[2]?.y !== enemies[index]?.y + 1 &&
+							true &&
+							enemies[3]?.y !== enemies[index]?.y + 1 &&
+							true;
+					} else if (index === 2) {
+						enemyWillNotCollideToLeftSide =
+							enemies[0].x !== enemies[index]?.x - 1 &&
+							true &&
+							enemies[1]?.x !== enemies[index]?.x - 1 &&
+							true &&
+							enemies[3]?.x !== enemies[index]?.x - 1 &&
+							true;
+						enemyWillNotCollideToTopSide =
+							enemies[0].y !== enemies[index]?.y - 1 &&
+							true &&
+							enemies[1]?.y !== enemies[index]?.y - 1 &&
+							true &&
+							enemies[3]?.y !== enemies[index]?.y - 1 &&
+							true;
+						enemyWillNotCollideToRightSide =
+							enemies[0].x !== enemies[index]?.x + 1 &&
+							true &&
+							enemies[1]?.x !== enemies[index]?.x + 1 &&
+							true &&
+							enemies[3]?.x !== enemies[index]?.x + 1 &&
+							true;
+						enemyWillNotCollideToBottomSide =
+							enemies[0].y !== enemies[index]?.y + 1 &&
+							true &&
+							enemies[1]?.y !== enemies[index]?.y + 1 &&
+							true &&
+							enemies[3]?.y !== enemies[index]?.y + 1 &&
+							true;
+					} else if (index === 3) {
+						enemyWillNotCollideToLeftSide =
+							enemies[0].x !== enemies[index]?.x - 1 &&
+							true &&
+							enemies[2]?.x !== enemies[index]?.x - 1 &&
+							true &&
+							enemies[1]?.x !== enemies[index]?.x - 1 &&
+							true;
+						enemyWillNotCollideToTopSide =
+							enemies[0].y !== enemies[index]?.y - 1 &&
+							true &&
+							enemies[2]?.y !== enemies[index]?.y - 1 &&
+							true &&
+							enemies[1]?.y !== enemies[index]?.y - 1 &&
+							true;
+						enemyWillNotCollideToRightSide =
+							enemies[0].x !== enemies[index]?.x + 1 &&
+							true &&
+							enemies[2]?.x !== enemies[index]?.x + 1 &&
+							true &&
+							enemies[1]?.x !== enemies[index]?.x + 1 &&
+							true;
+						enemyWillNotCollideToBottomSide =
+							enemies[0].y !== enemies[index]?.y + 1 &&
+							true &&
+							enemies[2]?.y !== enemies[index]?.y + 1 &&
+							true &&
+							enemies[1]?.y !== enemies[index]?.y + 1 &&
+							true;
+					}
+
+					if (enemies[index].hp !== 0) {
+						if (direction === "goLeft") {
+							enemies[index].p = 4;
+							if (
+								(world[enemies[index]?.y][enemies[index]?.x - 1].n === "pw" ||
+									world[enemies[index]?.y][enemies[index]?.x - 1].n === "gr") &&
+								enemyWillNotCollideToLeftSide
+							) {
+								enemies[index].x--;
+								const soundLaser = new Audio("lasersound.mp3");
+								soundLaser.playbackRate = 2;
+								soundLaser.volume = 0.1;
+								soundLaser.play();
+								enemiesBullet.push({
+									x: enemies[index]?.x,
+									y: enemies[index]?.y,
+									position: 4,
+									bulletType: "enemy",
+									index: index,
+								});
+							}
+						} else if (direction === "goRight") {
+							enemies[index].p = 2;
+							if (
+								(world[enemies[index]?.y][enemies[index]?.x + 1].n === "pw" ||
+									world[enemies[index]?.y][enemies[index]?.x + 1].n === "gr") &&
+								enemyWillNotCollideToRightSide
+							) {
+								enemies[index].x++;
+								const soundLaser = new Audio("lasersound.mp3");
+								soundLaser.playbackRate = 2;
+								soundLaser.volume = 0.1;
+								soundLaser.play();
+								enemiesBullet.push({
+									x: enemies[index]?.x,
+									y: enemies[index]?.y,
+									position: 2,
+									bulletType: "enemy",
+									index: index,
+								});
+							}
+						} else if (direction === "goTop") {
+							enemies[index].p = 1;
+							if (
+								(world[enemies[index]?.y - 1][enemies[index]?.x].n === "pw" ||
+									world[enemies[index]?.y - 1][enemies[index]?.x].n === "gr") &&
+								enemyWillNotCollideToTopSide
+							) {
+								enemies[index].y--;
+								const soundLaser = new Audio("lasersound.mp3");
+								soundLaser.playbackRate = 2;
+								soundLaser.volume = 0.1;
+								soundLaser.play();
+								enemiesBullet.push({
+									x: enemies[index]?.x,
+									y: enemies[index]?.y,
+									position: 1,
+									bulletType: "enemy",
+									index: index,
+								});
+							}
+						} else if (direction === "goBottom") {
+							enemies[index].p = 3;
+							if (
+								(world[enemies[index]?.y + 1][enemies[index]?.x].n === "pw" ||
+									world[enemies[index]?.y + 1][enemies[index]?.x].n === "gr") &&
+								enemyWillNotCollideToBottomSide
+							) {
+								enemies[index].y++;
+								const soundLaser = new Audio("lasersound.mp3");
+								soundLaser.playbackRate = 2;
+								soundLaser.volume = 0.1;
+								soundLaser.play();
+								enemiesBullet.push({
+									x: enemies[index]?.x,
+									y: enemies[index]?.y,
+									position: 3,
+									bulletType: "enemy",
+									index: index,
+								});
+							}
+						}
+					}
+				}
+			}
+		}
+
+		function updateHeroMovement() {
+			hero.style.left = `${heroTankXY.x * 35}px`;
+			hero.style.top = `${heroTankXY.y * 35}px`;
+		}
+
+		function displayHeroBullets() {
+			let heroBulletsHtml = "";
+			for (let i = 0; i < heroBullets.length; i++) {
+				heroBulletsHtml += `<div class='bullets${
+					heroBullets[i].position
+				}' style='top:${heroBullets[i].y * 35}px; left:${
+					heroBullets[i].x * 35
+				}px;'></div>`;
+			}
+			bulletsContainer.innerHTML = heroBulletsHtml;
+		}
+
+		function moveHeroBullets() {
+			for (let i = 0; i < heroBullets.length; i++) {
+				if (heroBullets[i].position === 1) {
+					heroBullets[i].y -= 1;
+				} else if (heroBullets[i].position === 2) {
+					heroBullets[i].x += 1;
+				} else if (heroBullets[i].position === 3) {
+					heroBullets[i].y += 1;
+				} else if (heroBullets[i].position === 4) {
+					heroBullets[i].x -= 1;
+				}
+			}
+		}
+
+		function explosionWhenHitWallsAndEnemies(x, y, id) {
+			let divExplosion = document.createElement("div");
+			divExplosion.setAttribute("class", "explosion");
+			divExplosion.setAttribute("id", `explosion${id}`);
+			divExplosion.style.top = `${y * 35}px`;
+			divExplosion.style.left = `${x * 35}px`;
+			mainContainer.appendChild(divExplosion);
+			const soundExplode = new Audio("explode.mp3");
+			soundExplode.playbackRate = 2;
+			soundExplode.volume = 0.2;
+			soundExplode.play();
+			if (document.querySelector(`#explosion${id}`)) {
+				setTimeout(() => {
+					document.querySelector(`#explosion${id}`).remove();
+				}, 500);
+			}
+		}
+
+		function bulletsHitWallsAndEnemies(bullets) {
+			for (let i = 0; i < bullets.length; i++) {
+				if (world[bullets[i]?.y][bullets[i]?.x]?.n === "b1") {
+					world[bullets[i].y][bullets[i].x].n = "b2";
+					world[bullets[i].y][bullets[i].x].h--;
+					explosionWhenHitWallsAndEnemies(bullets[i].x, bullets[i].y, i);
+					bullets[i] = bullets[bullets.length - 1];
+					bullets.pop();
+				}
+				if (world[bullets[i]?.y][bullets[i]?.x]?.n === "b2") {
+					world[bullets[i].y][bullets[i].x].n = "b3";
+					world[bullets[i].y][bullets[i].x].h--;
+					explosionWhenHitWallsAndEnemies(bullets[i].x, bullets[i].y, i);
+					bullets[i] = bullets[bullets.length - 1];
+					bullets.pop();
+				}
+				if (world[bullets[i]?.y][bullets[i]?.x]?.n === "b3") {
+					world[bullets[i].y][bullets[i].x].n = "pw";
+					explosionWhenHitWallsAndEnemies(bullets[i].x, bullets[i].y, i);
+					bullets[i] = bullets[bullets.length - 1];
+					bullets.pop();
+				}
+				if (world[bullets[i]?.y][bullets[i]?.x]?.n === "sw") {
+					explosionWhenHitWallsAndEnemies(bullets[i].x, bullets[i].y, i);
+					bullets[i] = bullets[bullets.length - 1];
+					bullets.pop();
+				}
+				if (world[bullets[i]?.y][bullets[i]?.x]?.n === "tp") {
+					world[bullets[i].y][bullets[i].x].hp -= 1;
+					explosionWhenHitWallsAndEnemies(bullets[i].x, bullets[i].y, i);
+					bullets[i] = bullets[bullets.length - 1];
+					bullets.pop();
+				}
+				for (let z = 0; z < enemies.length; z++) {
+					if (bullets[i]?.bulletType === "hero") {
+						if (
+							bullets[i]?.x === enemies[z]?.x &&
+							bullets[i]?.y === enemies[z]?.y
+						) {
+							enemies[z].hp -= 1;
+							explosionWhenHitWallsAndEnemies(bullets[i].x, bullets[i].y, i);
+							bullets[i] = bullets[bullets.length - 1];
+							bullets.pop();
+						}
+					}
+				}
+
+				if (bullets[i]?.bulletType === "enemy") {
+					for (let w = 0; w < heroBullets.length; w++) {
+						if (
+							bullets[i]?.x === heroBullets[w].x &&
+							bullets[i]?.y === heroBullets[w].y
+						) {
+							explosionWhenHitWallsAndEnemies(bullets[i].x, bullets[i].y, i);
+							bullets[i] = bullets[bullets.length - 1];
+							heroBullets[w] = heroBullets[heroBullets.length - 1];
+							heroBullets.pop();
+							bullets.pop();
+						}
+					}
+					if (
+						bullets[i]?.x === heroTankXY?.x &&
+						bullets[i]?.y === heroTankXY?.y
+					) {
+						explosionWhenHitWallsAndEnemies(bullets[i].x, bullets[i].y, i);
+						heroTankXY.hp -= 1;
+						hero.innerHTML = `<div class="heroHP${heroTankXY.hp}"></div>`;
+						bullets[i] = bullets[bullets.length - 1];
+						bullets.pop();
+					}
+				}
+			}
+		}
+
+		function displayWorld() {
+			let worldHtml = "";
+			for (let i = 0; i < world.length; i++) {
+				worldHtml += '<div class="row" style="height: 35px;">';
+				for (let x = 0; x < world[i].length; x++) {
+					if (world[i][x].n === "sw") {
+						worldHtml += '<div class="steelWall"></div>';
+					} else if (world[i][x].n === "b1") {
+						worldHtml += '<div class="brick"></div>';
+					} else if (world[i][x].n === "pw") {
+						worldHtml += '<div class="path"></div>';
+					} else if (world[i][x].n === "tp") {
+						worldHtml += `<div class="trophy"><div id="trophy" class="trophyHP${world[i][x].hp}"></div></div>`;
+					} else if (world[i][x].n === "gr") {
+						worldHtml += '<div class="grass"></div>';
+					} else if (world[i][x].n === "b2") {
+						worldHtml += '<div class="brick2"></div>';
+					} else if (world[i][x].n === "b3") {
+						worldHtml += '<div class="brick3"></div>';
+					}
+				}
+				worldHtml += "</div>";
+			}
+			worldContainer.innerHTML = worldHtml;
+		}
+
+		// displayEnemies();
+		displayWorld();
+
+		document.onkeydown = function (e) {
+			if (start === 1) {
+				if (e.keyCode === 37) {
+					bulletPosition = "bulletGoingLeft";
+					hero.style.backgroundImage = "url('herotankleft.gif')";
+				}
+				if (e.keyCode === 39) {
+					bulletPosition = "bulletGoingRight";
+					hero.style.backgroundImage = "url('herotankright.gif')";
+				}
+				if (e.keyCode === 38) {
+					bulletPosition = "bulletGoingTop";
+					hero.style.backgroundImage = "url('herotanktop.gif')";
+				}
+				if (e.keyCode === 40) {
+					bulletPosition = "bulletGoingDown";
+					hero.style.backgroundImage = "url('herotankdown.gif')";
+				}
+
+				if (
+					e.keyCode === 37 &&
+					world[heroTankXY.y][heroTankXY.x - 1].n !== "b1" &&
+					e.keyCode === 37 &&
+					world[heroTankXY.y][heroTankXY.x - 1].n !== "b2" &&
+					e.keyCode === 37 &&
+					world[heroTankXY.y][heroTankXY.x - 1].n !== "b3" &&
+					e.keyCode === 37 &&
+					world[heroTankXY.y][heroTankXY.x - 1].n !== "sw"
+				) {
+					//left
+					heroTankXY.x--;
+				} else if (
+					e.keyCode === 39 &&
+					world[heroTankXY.y][heroTankXY.x + 1].n !== "b1" &&
+					e.keyCode === 39 &&
+					world[heroTankXY.y][heroTankXY.x + 1].n !== "b2" &&
+					e.keyCode === 39 &&
+					world[heroTankXY.y][heroTankXY.x + 1].n !== "b3" &&
+					e.keyCode === 39 &&
+					world[heroTankXY.y][heroTankXY.x + 1].n !== "sw"
+				) {
+					//right
+					heroTankXY.x++;
+				} else if (
+					e.keyCode === 38 &&
+					world[heroTankXY.y - 1][heroTankXY.x].n !== "b1" &&
+					e.keyCode === 38 &&
+					world[heroTankXY.y - 1][heroTankXY.x].n !== "b2" &&
+					e.keyCode === 38 &&
+					world[heroTankXY.y - 1][heroTankXY.x].n !== "b3" &&
+					e.keyCode === 38 &&
+					world[heroTankXY.y - 1][heroTankXY.x].n !== "sw"
+				) {
+					// top
+					heroTankXY.y--;
+				} else if (
+					e.keyCode === 40 &&
+					world[heroTankXY.y + 1][heroTankXY.x].n !== "b1" &&
+					e.keyCode === 40 &&
+					world[heroTankXY.y + 1][heroTankXY.x].n !== "b2" &&
+					e.keyCode === 40 &&
+					world[heroTankXY.y + 1][heroTankXY.x].n !== "b3" &&
+					e.keyCode === 40 &&
+					world[heroTankXY.y + 1][heroTankXY.x].n !== "sw"
+				) {
+					//bottom
+					heroTankXY.y++;
+				}
+				if (e.keyCode == 32) {
+					const soundLaser = new Audio("lasersound.mp3");
+					soundLaser.playbackRate = 2;
+					soundLaser.play();
+					if (bulletPosition === "bulletGoingTop") {
+						console.log("firing top");
+						heroBullets.push({
+							x: heroTankXY.x,
+							y: heroTankXY.y,
+							position: 1,
+							bulletType: "hero",
+						});
+					}
+					if (bulletPosition === "bulletGoingRight") {
+						console.log("firing right");
+						heroBullets.push({
+							x: heroTankXY.x,
+							y: heroTankXY.y,
+							position: 2,
+							bulletType: "hero",
+						});
+					}
+					if (bulletPosition === "bulletGoingDown") {
+						console.log("firing down");
+						heroBullets.push({
+							x: heroTankXY.x,
+							y: heroTankXY.y,
+							position: 3,
+							bulletType: "hero",
+						});
+					}
+					if (bulletPosition === "bulletGoingLeft") {
+						console.log("firing left");
+						heroBullets.push({
+							x: heroTankXY.x,
+							y: heroTankXY.y,
+							position: 4,
+							bulletType: "hero",
+						});
+					}
+				}
+				updateHeroMovement();
+			}
+
+			if (start === 0) {
+				if (e.keyCode == 13) {
+					start = 1;
+					blackSreenDisplay();
+					// location.reload();
+				}
+			} else if (start === 2) {
+				if (e.keyCode == 13) {
+					location.reload();
+				}
+			}
+		};
+
+		function blackSreenDisplay(display = "none") {
+			if (display === "none") {
+				blackScreen.style.display = display;
+			}
+			if (display === "flex") {
+				start = 2;
+				blackScreen.style.display = "flex";
+				document.querySelector("#statusText").innerHTML = "GAME OVER";
+			}
+		}
+
+		setInterval(() => {
+			// displayEnemies();
+			// displayTrophy();
+			console.log(start);
+			if (start === 1) {
+				if (
+					heroTankXY.hp !== 0 &&
+					enemies.length !== 0 &&
+					world[trophyHealth.y][trophyHealth.x].hp !== 0
+				) {
+					bulletsHitWallsAndEnemies(heroBullets);
+					bulletsHitWallsAndEnemies(enemiesBullet);
+					updateEnemyXYMovement();
+					displayHeroBullets();
+					displayEnemiesBullets();
+				} else {
+					blackSreenDisplay("flex");
+				}
+			}
+		}, 10);
+		setInterval(() => {
+			if (start === 1) {
+				if (
+					heroTankXY.hp !== 0 &&
+					enemies.length !== 0 &&
+					world[trophyHealth.y][trophyHealth.x].hp !== 0
+				) {
+					updateEnemyMovement();
+				} else {
+					blackSreenDisplay("flex");
+				}
+			}
+		}, 500);
+		setInterval(() => {
+			if (start === 1) {
+				if (
+					heroTankXY.hp !== 0 &&
+					enemies.length !== 0 &&
+					world[trophyHealth.y][trophyHealth.x].hp !== 0
+				) {
+					gameStatus();
+					moveEnemiesBullets();
+					moveHeroBullets();
+					displayWorld();
+				} else {
+					blackSreenDisplay("flex");
+				}
+			}
+		}, 150);
+	</script>
+</html>

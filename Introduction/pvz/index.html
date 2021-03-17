@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<style>
+		* {
+			margin: 0%;
+			box-sizing: border-box;
+		}
+		.gameBackground {
+			height: 800px;
+			object-fit: contain;
+			top: 0;
+			left: 0;
+			position: absolute;
+		}
+		.lawnMower {
+			z-index: 10;
+			height: 120px;
+			object-fit: contain;
+			position: absolute;
+			top: 630px;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			position: absolute;
+			right: calc(100% - 100px);
+			/* 
+        100
+        230
+        370
+        490
+        630
+         */
+		}
+	</style>
+	<body>
+		<div class="container">
+			<img class="gameBackground" src="bg.jpg" alt="" />
+			<div id="lawnMowerContainer">
+				<img class="lawnMower mower" src="lawn_mower.png" alt="" style="top: 100px ">
+				<img class="lawnMower mower" src="lawn_mower.png" alt="" style="top: 230px ">
+				<img class="lawnMower mower" src="lawn_mower.png" alt="" style="top: 370px; ">
+				<img class="lawnMower mower" src="lawn_mower.png" alt="" style="top: 490px; ">
+				<img class="lawnMower mower" src="lawn_mower.png" alt="" style="top: 630px;">
+			</div>
+		</div>
+	</body>
+	<script>
+		const mower = document.querySelectorAll(".mower");
+		let lawnMower = [
+			{ x: 1, y: 100, hp: 5 },
+			{ x: 1, y: 230, hp: 5 },
+			{ x: 1, y: 370, hp: 5 },
+			{ x: 1, y: 490, hp: 5 },
+			{ x: 1, y: 630, hp: 5 },
+		];
+
+		const displayLawnMower = function () {
+			// for (let i = 0; i < lawnMower.length; i++) {
+            //     mower[i].style.left = 35++
+			// }
+		};
+        displayLawnMower();
+
+    
+        setInterval(() => {
+            let w = 0;
+            for (let i = 0; i < lawnMower.length; i++) {
+                lawnMower[i].x++;
+                mower[i].style.left = `${lawnMower[i].x * 50}px`
+			}
+            console.log(lawnMower)
+            // displayLawnMower();
+        }, 50);
+	</script>
+</html>

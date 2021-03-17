@@ -1,0 +1,176 @@
+body * {
+	/* outline: 1px solid black; */
+	font-family: "Arial";
+}
+.container {
+	padding: 20px;
+	width: 1000px;
+	margin: auto;
+}
+
+.header {
+	padding: 0 20px;
+	display: flex;
+	justify-content: space-between;
+	background-color: #f6f6f6;
+	align-items: center;
+}
+.header > h1 {
+	font-family: "Comic Sans MS" !important;
+    font-weight: 800;
+    margin: 10px 0;
+}
+
+.content {
+	vertical-align: top;
+	padding: 30px;
+	background: radial-gradient(
+		circle,
+		rgba(111, 89, 100, 1) 0%,
+		rgba(34, 18, 22, 1) 100%
+	);
+}
+
+.content_top {
+	display: flex;
+	justify-content: space-between;
+}
+
+.content_top > .about > p {
+	padding: 0 15px;
+}
+.content_top > .about > a {
+	padding: 0 15px;
+}
+.content_top > .about {
+	width: 450.8px;
+	height: 300px;
+}
+.content_top > img {
+	height: 290px;
+	padding: 5px;
+	background-color: lightgray;
+}
+
+.content_top > img {
+	border: px solid gray;
+}
+
+.content_top > .about,
+.story {
+	vertical-align: top;
+	background: linear-gradient(
+		90deg,
+		rgba(238, 231, 238, 1) 52%,
+		rgba(195, 167, 194, 1) 100%
+	);
+}
+
+.content_bottom {
+	display: flex;
+	justify-content: space-between;
+}
+.sub_header,
+.sub_header2 {
+	background: linear-gradient(
+		360deg,
+		rgba(197, 196, 204, 1) 0%,
+		rgba(139, 137, 150, 1) 50%,
+		rgba(197, 196, 204, 1) 100%
+	);
+	width: 100%;
+	color: white;
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.sub_header {
+	height: 45px;
+}
+.sub_header2 {
+	height: 40px;
+}
+.sub_header > h4,
+.sub_header2 > h5 {
+	margin-left: 20px;
+}
+
+.story {
+	width: 290px;
+	margin-top: 30px;
+	padding-bottom: 30px;
+}
+
+.story > h5 {
+	font-size: 17px !important;
+}
+
+.story > img {
+	width: inherit;
+}
+.story > p {
+	margin: 5px 0 0 0;
+	padding: 0 15px;
+	text-align: justify;
+	height: 200px;
+}
+
+.technologies {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 20px 12px 10px 12px;
+}
+.technologies > img {
+	width: auto;
+	height: 35px;
+	margin: 8px;
+	display: inline-block;
+}
+
+.story > .button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.story > .button > input {
+	border-radius: 10px;
+	color: white;
+	border: 1px solid black;
+	box-shadow: 3px 3px rgb(0, 0, 0, 0.4);
+	background-color: #407d61;
+	padding: 5px 6px;
+	cursor: pointer;
+	outline: none;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f6f6f6;
+    padding: 10px;
+}
+
+footer > .contact_details > h5 {
+    margin: 0 0 20px 0;
+}
+footer > .contact_links{
+    width: 400px;
+}
+
+footer > .contact_links > .link > a {
+    font-style: italic;
+    color: black;
+}
+
+footer > .contact_links > .link > img {
+    height: 25px;
+    margin-right: 5px;
+}
+
+footer > .contact_links, .link {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

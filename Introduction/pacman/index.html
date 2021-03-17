@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<style type="text/css">
+		/* * {
+        margin: 0;
+        box-sizing: border-box;
+    } */
+		body {
+			background-color: black;
+			margin: 0px;
+		}
+		.container {
+			/* display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; */
+		}
+		div.brick {
+			background-color: blue;
+		}
+		div.row div {
+			height: 50px;
+			width: 50px;
+			display: inline-block;
+		}
+		div.coin {
+			background-image: url("coin1.gif");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 30px;
+		}
+		div.cherry {
+			background-image: url("cherry.gif");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 30px;
+		}
+		div#pacman {
+			background-image: url("pacman.gif");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			position: absolute;
+			height: 50px;
+			width: 50px;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			position: absolute;
+			right: calc(100% - 100px);
+		}
+		@-webkit-keyframes slideIn {
+			0% {
+				transform: translateX(-900px);
+			}
+			100% {
+				transform: translateX(0);
+			}
+		}
+		@-moz-keyframes slideIn {
+			0% {
+				transform: translateX(-900px);
+			}
+			100% {
+				transform: translateX(0);
+			}
+		}
+		@keyframes slideIn {
+			0% {
+				transform: translateX(-900px);
+			}
+			100% {
+				transform: translateX(0);
+			}
+		}
+		#score {
+			border: 1px solid white;
+			width: 60px;
+			height: 60px;
+			color: white;
+			padding: 7px;
+			position: absolute;
+			top: 0;
+			left: 1400px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 25px;
+		}
+		.blinky {
+			background-image: url("blinky1.gif");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			position: absolute;
+			height: 50px;
+			width: 50px;
+			transition: 0.4s;
+			-webkit-transition: 0.4s;
+			-moz-transition: 0.4s;
+			position: absolute;
+			right: calc(100% - 100px);
+		}
+	</style>
+	<body>
+		<div class="container">
+			<div id="pacman" style="top: 50px; left: 50px"></div>
+			<div id="world"></div>
+			<div id="score">0</div>
+			<div id="enemyContainer"></div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		const resetWorld = [
+			[
+				[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+				[2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+				[2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2],
+				[2, 1, 2, 1, 1, 1, 4, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2],
+				[2, 1, 2, 2, 2, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2],
+				[2, 1, 1, 1, 2, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 4, 2, 1, 2],
+				[2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2],
+				[2, 1, 2, 4, 2, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2],
+				[2, 1, 2, 4, 2, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2],
+				[2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2],
+				[2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+				[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+			],
+			[
+				[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+				[2, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2],
+				[2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 1, 1, 1, 2, 1, 2, 1, 2],
+				[2, 1, 1, 2, 1, 2, 4, 2, 1, 2, 1, 2, 2, 1, 2, 2, 2, 2, 1, 2, 1, 2],
+				[2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2],
+				[2, 1, 1, 2, 4, 2, 1, 2, 1, 1, 1, 2, 1, 2, 2, 2, 2, 2, 1, 2, 1, 2],
+				[2, 1, 1, 2, 1, 2, 1, 1, 2, 2, 2, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2],
+				[2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2],
+				[2, 1, 1, 2, 1, 1, 1, 1, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2],
+				[2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2],
+				[2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2],
+				[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+			],
+			[
+				[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+				[2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 2, 1, 2],
+				[2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 1, 2, 1, 2],
+				[2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 4, 2, 2, 2, 1, 1, 1, 1, 2, 1, 2],
+				[2, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 4, 2, 2, 2, 2, 1, 2, 1, 2],
+				[2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 2, 1, 1, 1, 1, 2, 1, 2],
+				[2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 2, 1, 2, 1, 2],
+				[2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 1, 2, 1, 2],
+				[2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2],
+				[2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2],
+				[2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+				[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+			],
+		];
+		let world = [
+			[
+				[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+				[2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+				[2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2],
+				[2, 1, 2, 1, 1, 1, 4, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2],
+				[2, 1, 2, 2, 2, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2],
+				[2, 1, 1, 1, 2, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 4, 2, 1, 2],
+				[2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2],
+				[2, 1, 2, 4, 2, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2],
+				[2, 1, 2, 4, 2, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2],
+				[2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2],
+				[2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+				[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+			],
+			[
+				[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+				[2, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2],
+				[2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 1, 1, 1, 2, 1, 2, 1, 2],
+				[2, 1, 1, 2, 1, 2, 4, 2, 1, 2, 1, 2, 2, 1, 2, 2, 2, 2, 1, 2, 1, 2],
+				[2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2],
+				[2, 1, 1, 2, 4, 2, 1, 2, 1, 1, 1, 2, 1, 2, 2, 2, 2, 2, 1, 2, 1, 2],
+				[2, 1, 1, 2, 1, 2, 1, 1, 2, 2, 2, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2],
+				[2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2],
+				[2, 1, 1, 2, 1, 1, 1, 1, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2],
+				[2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2],
+				[2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2],
+				[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+			],
+			[
+				[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+				[2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 2, 1, 2],
+				[2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 1, 2, 1, 2],
+				[2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 4, 2, 2, 2, 1, 1, 1, 1, 2, 1, 2],
+				[2, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 4, 2, 2, 2, 2, 1, 2, 1, 2],
+				[2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 2, 1, 1, 1, 1, 2, 1, 2],
+				[2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 2, 1, 2, 1, 2],
+				[2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 1, 2, 1, 2],
+				[2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2],
+				[2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2],
+				[2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+				[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+			],
+		];
+		let enemies = [
+			{ x: 20, y: 1 },
+			{ x: 20, y: 1 },
+			{ x: 20, y: 1 },
+			{ x: 20, y: 1 },
+			{ x: 20, y: 1 },
+			{ x: 20, y: 1 },
+		];
+		let pacmanXY = {
+			x: 1,
+			y: 1,
+		};
+
+		let randWorld = Math.floor(Math.random() * 3);
+		const pacman = document.querySelector("#pacman");
+		const enemyContainer = document.querySelector("#enemyContainer");
+		const blinky = document.querySelectorAll(".blinky");
+
+
+		function displayWorld() {
+			let html = "";
+			for (let i = 0; i < world[randWorld].length; i++) {
+				html += '<div class="row" style="height: 50px;">';
+				for (let x = 0; x < world[randWorld][i].length; x++) {
+					if (world[randWorld][i][x] === 2) {
+						html += '<div class="brick"></div>';
+					} else if (world[randWorld][i][x] === 1) {
+						html += '<div class="coin"></div>';
+					} else if (world[randWorld][i][x] === 4) {
+						html += '<div class="cherry"></div>';
+					}
+					if (world[randWorld][i][x] === 0) {
+						html += '<div class="empty"></div>';
+					}
+				}
+				html += "</div>";
+			}
+			document.querySelector("#world").innerHTML = html;
+		}
+		
+		function displayEnemies() {
+			let enemiesHtml = "";
+			for (let i = 0; i < enemies.length; i++) {
+				enemiesHtml += `<div class="blinky" style="top: ${
+					enemies[i].y * 50
+				}px;left: ${enemies[i].x * 50}px" ></div>`;
+			}
+			enemyContainer.innerHTML = enemiesHtml;
+		}
+		displayEnemies();
+		displayWorld();
+
+		let score = 0;
+
+		function enemiesMovement() {
+			for (let i = 0; i < enemies.length; i++) {
+				if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 1&&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] === 1 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 2 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 2 &&
+					enemies[i].y > Math.floor(Math.random() * 5 
+					)
+				) {
+					enemies[i].x--;
+					console.log("going left");
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 1 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 1 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 2 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 1
+				) {
+					let chooseDirection1121 = Math.floor(Math.random() * 3) + 1;
+					if (chooseDirection1121 === 1) {
+						enemies[i].x--;
+						console.log("going left");
+					} else if (chooseDirection1121 === 2) {
+						enemies[i].x++;
+						console.log("going right");
+					} else if (chooseDirection1121 === 3) {
+						enemies[i].y--;
+						console.log("going up");
+					}
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 2 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 1 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 2 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 1
+				) {
+					enemies[i].x--;
+					console.log("going left");
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 2 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 2 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 1 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 2
+				) {
+					enemies[i].y++;
+					console.log("down down");
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 2 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] === 2 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 1 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 1 &&
+					enemies[i].x > Math.floor(Math.random() * 10
+					)
+				) {
+					enemies[i].y++;
+					console.log("down down");
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 1 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 2 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 2 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 1
+				) {
+					let chooseDirection1221 = Math.floor(Math.random() * 4) + 1;
+					if (chooseDirection1221 === 2) {
+						enemies[i].x++;
+						console.log("going right");
+					} else if (chooseDirection1221 === 3) {
+						enemies[i].y--;
+						console.log("going up");
+					}
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 2 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 2 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 1 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 1 &&
+					enemies[i].x < Math.floor(Math.random() * 10)
+				) {
+					enemies[i].y--;
+					console.log("up");
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 0 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 2 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 1 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 2
+				) {
+					enemies[i].x++;
+					console.log("going right");
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 0 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 0 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 2 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 2 &&
+					enemies[i].y < Math.floor(Math.random() * 5)
+				) {
+					enemies[i].x++;
+					console.log("right right");
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 1 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 2 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 1 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 1
+				) {
+					let chooseDirection1211 = Math.floor(Math.random() * 4) + 1;
+					if (chooseDirection1211 === 2) {
+						enemies[i].x++;
+						console.log("going right");
+					} else if (chooseDirection1211 === 3) {
+						enemies[i].y--;
+						console.log("going up");
+					} else if (chooseDirection1211 === 4) {
+						enemies[i].y++;
+						console.log("going bottom");
+					}
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 0 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 1 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 2 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 2
+				) {
+					enemies[i].x++;
+					console.log("right right");
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 0 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 0 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 1 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 2
+				) {
+					let chooseDirection0012 = Math.floor(Math.random() * 4) + 1;
+					if (chooseDirection0012 === 1) {
+						enemies[i].x--;
+						console.log("going left");
+					} else if (chooseDirection0012 === 2) {
+						enemies[i].x++;
+						console.log("going right");
+					} else if (chooseDirection0012 === 4) {
+						enemies[i].y++;
+						console.log("going bottom");
+					}
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 2 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 2 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 1 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 0
+				) {
+					let chooseDirection2210 = Math.floor(Math.random() * 4) + 1;
+					if (chooseDirection2210 === 3) {
+						enemies[i].y--;
+						console.log("going up");
+					} else if (chooseDirection2210 === 4) {
+						enemies[i].y++;
+						console.log("going bottom");
+					}
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 2 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 0 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 1 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 2
+				) {
+					let chooseDirection2012 = Math.floor(Math.random() * 4) + 1;
+					if (chooseDirection2012 === 1) {
+						enemies[i].x--;
+						console.log("left");
+					} else if (chooseDirection2012 === 4) {
+						enemies[i].y++;
+						console.log("going bottom");
+					}
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 2 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 1 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 1 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 2
+				) {
+					let chooseDirection2112 = Math.floor(Math.random() * 4) + 1;
+					if (chooseDirection2112 === 1) {
+						enemies[i].x--;
+						console.log("left");
+					} else if (chooseDirection2112 === 4) {
+						enemies[i].y++;
+						console.log("going bottom");
+					}
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 1 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 2 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 1 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 2
+				) {
+					let chooseDirection1212 = Math.floor(Math.random() * 4) + 1;
+					if (chooseDirection1212 === 2) {
+						enemies[i].x++;
+						console.log("right");
+					} else if (chooseDirection1212 === 4) {
+						enemies[i].y++;
+						console.log("going bottom");
+					}
+				} else if (
+					world[randWorld][enemies[i].y][enemies[i].x + 1] === 2 &&
+					world[randWorld][enemies[i].y][enemies[i].x - 1] == 1 &&
+					world[randWorld][enemies[i].y + 1][enemies[i].x] === 1 &&
+					world[randWorld][enemies[i].y - 1][enemies[i].x] === 1
+				) {
+					let chooseDirection2111 = Math.floor(Math.random() * 4) + 1;
+					if (chooseDirection2111 === 1) {
+						enemies[i].x--;
+						console.log("left");
+					} else if (chooseDirection2111 === 3) {
+						enemies[i].y--;
+						console.log("up");
+					} else if (chooseDirection2111 === 4) {
+						enemies[i].y++;
+						console.log("bottom");
+					}
+				}
+				document.querySelectorAll(".blinky")[i].style.left = `${
+					enemies[i].x * 50
+				}px`;
+				document.querySelectorAll(".blinky")[i].style.top = `${
+					enemies[i].y * 50
+				}px`;
+			}
+		}
+
+		function updateMovement() {
+			pacman.style.left = pacmanXY.x * 50 + "px";
+			pacman.style.top = pacmanXY.y * 50 + "px";
+		}
+		function updateScore() {
+			document.querySelector("#score").innerHTML = score;
+		}
+		let keyCode = 39;
+		let start = 0;
+
+		function pacmanVsBlinky() {
+			world = resetWorld;
+			randWorld = Math.floor(Math.random() * 3);
+			displayWorld();
+			start = 0;
+			score = 0;
+			pacmanXY.x = 1;
+			pacmanXY.y = 1;
+			updateScore();
+			updateMovement();
+			for(let i = 0; i < enemies.length; i++) {
+				enemies[i].x = 20;
+				enemies[i].y = 1;
+			}
+
+		}
+
+		setInterval(() => {
+			for(let i = 0; i < enemies.length; i++) {
+				if(pacmanXY.x === enemies[i].x && pacmanXY.y === enemies[i].y)  {
+					pacmanVsBlinky();
+				}
+			}
+			
+			if(start) {
+				if (keyCode === 37 && world[randWorld][pacmanXY.y][pacmanXY.x - 1] !== 2) {
+					//left
+					pacmanXY.x--;
+					pacman.style.backgroundImage = "url('pacmanleft.gif')";
+				} else if (keyCode === 39 && world[randWorld][pacmanXY.y][pacmanXY.x + 1] !== 2) {
+					//right
+					pacmanXY.x++;
+					pacman.style.backgroundImage = "url('pacman.gif')";
+				} else if (keyCode === 38 && world[randWorld][pacmanXY.y - 1][pacmanXY.x] !== 2) {
+					// top
+					pacmanXY.y--;
+					pacman.style.backgroundImage = "url('pacmantop.gif')";
+				} else if (keyCode === 40 && world[randWorld][pacmanXY.y + 1][pacmanXY.x] !== 2) {
+					//bottom
+					pacmanXY.y++;
+					pacman.style.backgroundImage = "url('pacmandown.gif')";
+				}
+				if (world[randWorld][pacmanXY.y][pacmanXY.x] === 1) {
+					world[randWorld][pacmanXY.y][pacmanXY.x] = 0;
+					score += 1;
+					updateScore();
+					displayWorld();
+				} else if (world[randWorld][pacmanXY.y][pacmanXY.x] === 4) {
+					world[randWorld][pacmanXY.y][pacmanXY.x] = 0;
+					score += 10;
+					updateScore();
+					displayWorld();
+				}
+				updateMovement();
+				enemiesMovement();
+			}
+		}, 300);
+
+		document.addEventListener("keydown", (e) => {
+			if(e.keyCode === 32) {
+				start = 1;
+				console.log(start)
+			}
+			if (e.keyCode === 37 && world[randWorld][pacmanXY.y][pacmanXY.x - 1] !== 2) {
+				keyCode = 37;
+			} else if (e.keyCode === 39 && world[randWorld][pacmanXY.y][pacmanXY.x + 1] !== 2) {
+				keyCode = 39;
+			} else if (e.keyCode === 38 && world[randWorld][pacmanXY.y - 1][pacmanXY.x] !== 2) {
+				keyCode = 38;
+			} else if (e.keyCode === 40 && world[randWorld][pacmanXY.y + 1][pacmanXY.x] !== 2) {
+				keyCode = 40;
+			}
+		});
+	</script>
+</html>
