@@ -1,0 +1,197 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-family: "Source Sans Pro", sans-serif;
+}
+.container {
+	width: 970px;
+	margin: auto;
+}
+.first_container {
+	background-color: #2b5b84;
+	border-bottom: 4px solid rgb(42, 42, 42);
+}
+.site_settings {
+	text-align: right;
+	padding-right: 30px;
+}
+.site_settings > h4 {
+	color: white;
+	font-weight: 400;
+}
+.site_settings > h4 > span {
+	color: #d3b647 !important;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.top_header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-right: 30px;
+}
+.top_header > img {
+	height: 120px;
+	width: auto;
+}
+.top_header > .top_header_search {
+	display: flex;
+	align-items: center;
+	background-color: #444444;
+	height: 30px;
+	padding: 20px 30px;
+	border-radius: 10px;
+	box-shadow: 3px 3px rgb(0, 0, 0, 0.4);
+}
+.top_header > .top_header_search > #search_input {
+	height: 30px;
+	text-align: center;
+	border-top: 2px solid lightgray;
+	border-left: 2px solid lightgray;
+	outline: none;
+}
+.top_header > .top_header_search > #search_button {
+	background-color: #245076;
+	color: white;
+	padding: 5px 7px;
+	border-radius: 5px;
+	outline: none;
+	margin-left: 10px;
+	border-top: 2px solid lightgray;
+	border-left: 2px solid lightgray;
+	border-right: 2px solid rgb(170, 170, 170);
+	border-bottom: 2px solid rgb(170, 170, 170);
+}
+.navigation {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	width: 850px;
+	margin: auto;
+	background-color: #417bad;
+	border-radius: 6px;
+	height: 50px;
+	box-shadow: 3px 3px rgb(0, 0, 0, 0.4);
+}
+.navigation > a {
+	color: white;
+	text-decoration: none;
+	font-weight: 400;
+	font-size: 20px;
+}
+.introduction {
+	display: flex;
+	width: 850px;
+	margin: auto;
+	margin-top: 20px;
+	padding-bottom: 30px;
+    align-items: center;
+}
+.introduction > .introduction_links {
+	width: 200px;
+	text-align: center;
+    padding-left: 20px;
+}
+.introduction > .introduction_links > h4 {
+	margin-bottom: 15px;
+}
+.introduction > .introduction_links > h4 > span {
+	margin-right: 10px;
+	color: gold;
+}
+.introduction > .introduction_links > h4 > a {
+	color: white;
+	font-weight: 600;
+	font-size: 18px;
+}
+.introduction > .introduction_details {
+	width: 650px;
+	text-align: center;
+	color: white;
+    padding-right: 20px;
+}
+.introduction > .introduction_details > p {
+	font-size: 15.8px;
+	margin-bottom: 10px;
+}
+.introduction > .introduction_details > h4 {
+	font-size: 25px;
+	color: gold;
+	font-weight: 400;
+	font-style: italic;
+}
+.introduction > .introduction_details > h5 {
+	font-size: 20px;
+	margin-top: 10px;
+	font-weight: 400;
+}
+.about_python {
+	background-color: white;
+	display: flex;
+	justify-content: center;
+	padding-bottom: 20px;
+}
+.about_python > .about_python_started,
+.about_python_application {
+	padding: 10px 20px;
+	text-align: center;
+	width: 400px;
+}
+.about_python .about_python_border {
+	border-top: 5px solid #73a7d5;
+}
+.about_python .about_python_listed {
+	padding: 0 50px;
+}
+.about_python h2 {
+	margin-bottom: 10px;
+	font-weight: 400;
+}
+.about_python a {
+	color: #417bad;
+	text-decoration: none;
+}
+.about_python p {
+	padding: 0 40px !important;
+}
+.about_python p > span {
+	font-size: 15px;
+	color: #417bad;
+}
+.about_python ul {
+	list-style-type: square;
+}
+footer {
+	background: linear-gradient(
+		0deg,
+		rgba(61, 130, 190, 1) 0%,
+		rgba(43, 91, 132, 1) 35%
+	);
+	text-align: center;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-top: 50px;
+	padding-bottom: 10px;
+}
+footer > .footer_info {
+	display: flex;
+	justify-content: space-evenly;
+	opacity: 0.6;
+    padding: 0 90px
+}
+footer > .footer_info > h4 {
+	font-size: 20px;
+	font-weight: 400;
+}
+footer > .footer_copyright > h5 {
+	margin: 0;
+}
+footer > .footer_copyright {
+	opacity: 0.6;
+	margin-top: 10px;
+	font-size: 13px;
+}
