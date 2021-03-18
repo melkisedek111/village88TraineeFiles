@@ -1,0 +1,94 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
+	background-color: #eeeeee;
+	font-family: "Poppins";
+    color: #1913A2
+}
+h1 {
+	font-weight: bold;
+	margin: 0%;
+	padding: 0%;
+	line-height: 35px;
+}
+p {
+	margin: 0;
+	padding: 0;
+}
+.topElements {
+	display: flex;
+}
+.bottomElements {
+	padding-top: 40px;
+}
+.non_elements, .element_data {
+	margin: 0;
+	padding: 0;
+}
+.non_elements > h2 {
+	font-size: 20px !important;
+    color: red !important;
+}
+.element_data > div {
+	border: 1px solid black;
+}
+.top_rows {
+	display: flex;
+}
+.blocks > div, h2 {
+	width: 75px;
+	height: 85px;
+	margin: 2px;
+	text-align: center;
+	word-wrap: break-word;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.withElements > div {
+	border: 1px solid black;
+}
+.firstElementColumns, .secondElementColumns, .thirdELementColumns, .middleElementColumns {
+	display: flex;
+}
+.firstElementColumns > div > div > div {
+    background-color: #689BFF;
+}
+.secondElementColumns > div > div > div {
+    background-color: #FD9A98;
+}
+.thirdELementColumns > div > div > div {
+    background-color: #FECB00;
+}
+.middleElementColumns > div > div > div > div {
+    background-color: #1FCA21;
+}
+.middleElementColumns {
+    margin-left: 70px;
+}
+.secondElementColumns {
+	margin-left: 30px;
+}
+.displayColumns {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.elementColumns {
+	display: flex;
+    justify-content: flex-end;
+}
+.label {
+    color: red;
+    font-size: 20px;
+}
+.label > p {
+    display: inline-block;
+}
+.label > .misc {
+    margin-left: 50px;
+}

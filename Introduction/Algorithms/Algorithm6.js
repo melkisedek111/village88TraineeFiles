@@ -31,16 +31,6 @@ function returnReversed(arr) {
 		newArr[arr.length - 1 - i] = arr[i];
 	}
 	return newArr;
-	// let temp;
-	// for (let i = 0; i < arr.length; i++) {
-	// 	if(arr.length > i) {
-	// 		temp = arr[i];
-	// 		arr[i] = arr[arr.length - 1 - i];
-	// 	} else if (arr.length < i) {
-
-	// 	}
-	// }
-	// return arr;
 }
 returnReversed([1, 2, 3, 7, 8]);
 
