@@ -24,15 +24,15 @@ p {
 .bottomElements {
 	padding-top: 40px;
 }
-.non_elements, .element_data {
+.nonElements, .elementData {
 	margin: 0;
 	padding: 0;
 }
-.non_elements > h2 {
+.nonElements > h2 {
 	font-size: 20px !important;
     color: red !important;
 }
-.element_data > div {
+.elementData > div {
 	border: 1px solid black;
 }
 .top_rows {
@@ -55,16 +55,16 @@ p {
 .firstElementColumns, .secondElementColumns, .thirdELementColumns, .middleElementColumns {
 	display: flex;
 }
-.firstElementColumns > div > div > div {
+.firstElement > div {
     background-color: #689BFF;
 }
-.secondElementColumns > div > div > div {
+.secondElement > div {
     background-color: #FD9A98;
 }
-.thirdELementColumns > div > div > div {
+.thirdElement > div {
     background-color: #FECB00;
 }
-.middleElementColumns > div > div > div > div {
+.middleElement > div {
     background-color: #1FCA21;
 }
 .middleElementColumns {
