@@ -88,3 +88,86 @@ nav > div > a {
     
 
 }
+
+body::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar
+{
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #333333;
+}
+
+.loading {
+    background-color: black;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    overflow: hidden;
+}
+.loading > img {
+    width: 50%;
+    height: 50%;
+    top: 25%;
+    left: 25%;
+    margin: 0 auto;
+    position: relative;
+}
+
+
+.jqueryLibraries > .jqueryExamples {
+    flex: .6;
+}
+.jqueryLibraries > .jqueryName {
+    flex: .3;
+    text-align:right
+}
+.jqueryLibraries {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.jqueryLibraries > div > div {
+    padding: 20px 0;
+}
+.sweetalert2 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.jqueryName > h1:hover {
+    color: red;
+}
+.jqueryName > h1 {
+    cursor: pointer;
+}
+.jqueryExamples > div > button {
+    width: 200px;
+    height: 50px;
+    background-color: black;
+    text-transform: uppercase;
+    color: white;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.jqueryExamples > div {
+    display: none;
+}
