@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css" integrity="sha512-SJw7jzjMYJhsEnN/BuxTWXkezA2cRanuB8TdCNMXFJjxG9ZGSKOX5P3j03H6kdMxalKHZ7vlBMB4CagFP/de0A==" crossorigin="anonymous" />
-    
+    <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="style.css">
 
     <title>My Assignments</title>
@@ -52,6 +52,8 @@
                     </div>
                     <div class="HoverCss">
                         <button class="hvr-grow">Grow</button>
+                        <button class="hvr-bob">Bob</button>
+                        <button class="hvr-buzz">Buzz</button>
                         <button class="hvr-shrink">Shrink</button>
                         <button class="hvr-pulse-grow">Pulse Grow</button>
                         <button class="hvr-wobble-to-top-right">Wobble Horizontal</button>
@@ -241,7 +243,7 @@
                 $('.loading').slideUp(function() {
                     AOS.init();
                 });
-            }, 5000);
+            }, 3000);
             $('.main_content__activities a').hover(function() {
                 $(this).children().eq(0).slideDown();
                 $(this).children().eq(2).slideDown();
