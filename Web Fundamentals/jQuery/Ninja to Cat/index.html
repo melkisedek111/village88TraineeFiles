@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" ></script>
+		<title>Ninja to Cat</title>
+		<style>
+            * {
+                margin: 0%;
+                padding: 0;
+            }
+			img {
+				height: 150px;
+				width: 612px;
+				display: block;
+				margin: 10px auto;
+				cursor: pointer;
+			}
+			body {
+				font-family: "Poppins";
+			}
+			.container {
+				width: 800px;
+                margin: 0 auto;
+			}
+			h1 {
+				text-align: center;
+			}
+            .wrapper {
+                display: flex;
+                justify-content: space-evenly;
+            }
+            .guessImage {
+                height: 620px;
+                object-fit: contain;
+            }
+            .screen {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                background: rgba(0, 0, 0, .8);
+                display: none;
+                text-align: center;
+            }
+            .screen > h1, p {
+                color: white;
+            }
+            .screen > p {
+                font-size: 150px;
+                font-weight: 900;
+            }
+            .screen > img {
+                height: 500px !important;
+                width: auto;
+                margin-bottom: 30px;
+                border: 5px solid lightgray;
+            }
+            #restartGame {
+                padding: 20px 70px;
+                font-size: 30px;
+                background-color: lime;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+		</style>
+	</head>
+	<body>
+        <div class="screen">
+            <p>Congratulation</p>
+            <h1>You have Completed the <span></span> Puzzle</h1>
+            <img src="" alt="">
+            <button id="restartGame">Restart Game</button>
+        </div>
+		<div class="wrapper">
+			<div class="guessArea">
+				<h1>Find the</h1>
+				<div class="container">
+				</div>
+			</div>
+			<div class="searchImage">
+				<h1></h1>
+			</div>
+		</div>
+		<script>
+			$(document).ready(function () {
+				const animals = ["dog", "cat", "chicken"];
+                const guessAnimal = animals[Math.floor(Math.random() * 3)];
+				for (let i = 0; i < 5; i++) {
+					$(".container").append(`<img src="assets/${animals[Math.floor(Math.random() * 3)]}_${Math.floor(Math.random() * 5) + 1}.jpg" alt="">`);
+				}
+				$(".searchImage").append(`<img class="guessImage" src="assets/${guessAnimal}.jpg" alt="">`);
+                $('.searchImage h1').append(guessAnimal.toUpperCase());
+                $('.guessArea h1').append(` ${guessAnimal.toUpperCase()}`);
+                $('.searchImage h1').css('font-size', '100px');
+                $('.searchImage h1').css('margin', '0 auto');
+                function checkAnimal() {
+                    let score = 0;
+                    for(let i = 0; i < $(".container img").length;i++) {
+                        if(`${guessAnimal}_${i + 1}` == $(".container img").eq(i).attr('src').split('/')[1].split('.')[0]) {
+                            score += 1;
+                        }
+                    }
+                    if(score === 5) {
+                        $(".screen h1 span").append(guessAnimal.toUpperCase());
+                        $(".screen h1 span").css('color', 'red');
+                        $(".screen img").attr('src', `assets/${guessAnimal}.jpg`);
+                        $(".screen").css('display', 'block');
+                    }
+                }
+                checkAnimal();
+                $('#restartGame').click(function() {
+                    location.reload();
+                });
+				$(".container img").click(function () {
+                    setTimeout(() => {
+                        checkAnimal();
+                    }, 200);
+					$(this).attr("src",`assets/${animals[Math.floor(Math.random() * 3)]}_${Math.floor(Math.random() * 5) + 1}.jpg`);
+				});
+			});
+		</script>
+	</body>
+</html>

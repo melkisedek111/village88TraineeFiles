@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" ></script>
+    <title>Disappearing Ninja</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Poppins';
+        }
+        img {
+            /* display: block; */
+            width: 250px;
+            /* height: auto; */
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 1080px;
+            margin: 0 auto;
+        }
+        .container > div {
+            position: relative;
+            height: 250px;
+            width: 250px;
+            margin: 5px;
+            cursor: pointer;
+            border: 5px solid lightgray;
+        }
+        .container > div:hover .overlay {
+            opacity: 1;
+        }
+        .container .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .5s ease;
+            background-color: black;
+        }
+        .container .overlay > h2 {
+            color: white;
+            font-size: 30px;
+            position: absolute;
+            top: 20%;
+            text-align: center;
+        }
+        button {
+            height: 150px;
+            width: 150px;
+            margin: 10px;
+            outline: none;
+            font-size: 30px;
+            background-color: lime;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .wrapper {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+        </div>
+        <button id="restore">Restore All Cats</button>
+    </div>
+    <script>
+        $(document).ready(function() {
+            for(let i = 0; i < 8;i++) {
+            $('.container').append(`<div>
+                    <img src="https://images.pexels.com/photos/6441474/pexels-photo-6441474.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="angryCat">
+                    <div class="overlay">
+                        <h2>CLICK THE ANGRY CAT TO DISAPPEAR</h2>
+                    </div>
+                </div>`);
+            }
+            $(document).on('click', '.overlay', function() {
+                $(this).parent().css('opacity', 0);
+                $(this).parent().css('cursor', 'default');
+            });
+            $("#restore").click(function() {
+                $('img').parent().css('opacity', 1);
+                $('img').parent().css('cursor', 'pointer');
+            });
+        });
+    </script>
+</body>
+</html>

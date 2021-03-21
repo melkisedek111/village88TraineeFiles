@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" ></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <title>Sortable Ninja</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Poppins';
+        }
+        img {
+            display: block;
+            height: 150px;
+            width: 615px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        .container {
+            width: 630px;
+            /* margin: 0 auto; */
+        }
+        .timeLogo {
+            height: 100px;
+            width: auto;
+            margin-right: 20px;
+        }
+        .wrapper {
+            padding-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .timer {
+            text-align: center;
+            margin-left: 20px;
+            padding-left: 50px;
+        }
+        .timer > div > h1 {
+            font-size: 60px;
+        }
+        .timer > div > h1 > span {
+            /* padding: 0 20px; */
+            width: 70px;
+            display: inline-block;
+        }
+        .timer > div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .screen {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 1);
+            display: none;
+            text-align: center;
+            display: block;
+        }
+        .screen > h1, p {
+            color: white;
+        }
+        .screen > p {
+            font-size: 150px;
+            font-weight: 900;
+        }
+        .screen > div {
+            position: relative;
+        }
+
+        .screen > div > .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            height: 100%;
+            width: 410px;
+            opacity: 0.5;
+            transition: .5s ease;
+            background-color: red;
+        }
+        .screen > div > img {
+            height: 500px !important;
+            width: auto;
+            margin: 0 auto;
+            margin-bottom: 30px;
+            border: 5px solid lightgray;
+            background-color: rgba(0, 0, 0, 1);
+        }
+        #restartGame, #startGame {
+            padding: 20px 70px;
+            font-size: 30px;
+            background-color: lime;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        #restartGame {
+            display: none;
+        }
+        #startGame {
+            display: inline-block;
+            }
+    </style>
+</head>
+<body>
+    <div class="screen">
+        <p>Game Start</p>
+        <h1>Try to solve the <span style="color: red;">Angry Chicken</span> Puzzle</h1>
+        <div>
+            <img src="assets/chicken.jpg" alt="">
+            <div></div>
+        </div>
+        <button id="restartGame">Restart Game</button>
+        <button id="startGame">Start Game</button>
+    </div>
+    <div class="wrapper">
+        <div class="container">
+
+        </div>
+        <div class="timer">
+            <h1>TIMER</h1>
+            <div>
+                <img class="timeLogo" src="http://pngimg.com/uploads/alarm_clock/alarm_clock_PNG63.png" alt="">
+                <h1 id="time"><span>0</span> seconds left</h1>
+            </div>
+            <div>
+                <img class="timeLogo" src="https://i.pinimg.com/originals/16/ff/8a/16ff8a1087cc92cf4ebca36a479e58ac.png" alt="">
+                <h1 id="moves"><span>0</span> moves left</h1>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {         
+            function randomNumber() {
+                let count = 5;
+                let numbersContainer = {};
+                let randomNumArray = [];
+                let currentNumber, i = 0;
+                function getRandomNumber() {
+                    return Math.floor(Math.random() * 5) + 1;
+                }
+                while(i < count){
+                    if (i == 0) {
+                        currentNumber = getRandomNumber();
+                    } 
+                    else while (numbersContainer[currentNumber = getRandomNumber()]);
+                    numbersContainer[currentNumber] = 1;
+                    randomNumArray.push(currentNumber);
+                    i++;               
+                }
+                return randomNumArray;
+            }
+
+            const randomPieces = randomNumber();
+            for(let i = 0; i < randomPieces.length; i++) {
+                $('.container').append(`<img src="assets/chicken_${randomPieces[i]}.jpg" alt="chicken_${randomPieces[i]}" />`);
+            }
+            function gameOverScreen(message, headMessage, overlay = 0) {
+                $('.screen p').html(headMessage);
+                $('.screen h1').html(message);
+                if(overlay) {
+                    $('.screen').css('background', 'rgba(0, 0, 0, .8)');
+                    $('.screen div div').addClass('overlay');
+                } 
+                $('.screen').css('display', 'block');
+            }
+            let start = false;
+            $('#startGame').click(function() {
+                start = true;
+                $('.screen').css('display', 'none');
+                $('#startGame').hide();
+                $('#restartGame').css('display', 'inline-block');
+            });
+            $('#restartGame').click(function(){
+                location.reload();
+            });
+            let gameTime = 15;
+            let moves = 7;
+            $('#moves span').html(moves);
+            $('#time span').html(gameTime);
+            setInterval(() => {
+                if(start) {
+                    if(gameTime > 0) {
+                        gameTime--;
+                        $('#time span').html(gameTime);
+                    } else if(gameTime === 0) {
+                        gameOverScreen('The <span style="color: red;">Angry Chicken</span> is now totally angry! rawr', 'You lose!', 1);
+                    }
+                }
+            }, 1000);
+            $('.container').sortable({
+                update: function(e, ui) {
+                    moves--;
+                    $('#moves span').html(moves);
+                    if(moves === 0) {
+                        gameOverScreen('Out of moves? Eat this <span style="color: red;">Angry Chicken</span> Attack!', 'You lose!', 1);
+                    }
+                }
+            });
+            $("#sortable").disableSelection();
+            $(document).on('mouseup', 'img', function() {
+                let containerChildren = $('.container').children();
+                let score = 0;
+                if(containerChildren.eq(0).attr('src').split('/')[1].split('.')[0] == 'chicken_1') {
+                    score += 1;
+                } 
+                if(containerChildren.eq(1).attr('src').split('/')[1].split('.')[0] == 'chicken_2') {
+                    score += 1;
+                } 
+                if(containerChildren.eq(2).attr('src').split('/')[1].split('.')[0] == 'chicken_3') {
+                    score += 1;
+                } 
+                if(containerChildren.eq(3).attr('src').split('/')[1].split('.')[0] == 'chicken_4') {
+                    score += 1;
+                } 
+                if(containerChildren.eq(4).attr('src').split('/')[1].split('.')[0] == 'chicken_5') {
+                    score += 1;
+                }
+                if(score === 5) {
+                    gameOverScreen('<h1>You have Completed the <span style="color: green;">Angry Chicken</span> Puzzle</h1>','Congratulation');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

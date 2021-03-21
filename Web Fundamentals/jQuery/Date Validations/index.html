@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" ></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Date Validations</title>
+</head>
+<body>
+    <div class="bg"></div>
+    <h1>Please fill up the form to Register</h1>
+    <div class="container">
+        <form id="form" method="POST">
+            <div>
+                <label for="firstname">First Name <span>*</span></label>
+                <input type="text" name="firstname" class="formValue" id="firstname" placeholder="Enter your first name">
+            </div>
+            <div>
+                <label for="lastname">Last Name <span>*</span></label>
+                <input type="text" name="lastname" class="formValue" id="lastname" placeholder="Enter your last name">
+            </div>
+            <div>
+                <label for="dateOfBirth">Date of Birth <span>*</span></label>
+                <input type="date" name="dateOfBirth" class="formValue" id="dateOfBirth" >
+            </div>
+            <div>
+                <label for="email">Email <span>*</span></label>
+                <input type="email" name="email" class="formValue" id="email" placeholder="Enter your email">
+            </div>
+            <div>
+                <label for="phone">Phone Number <span>*</span></label>
+                <input type="text" name="phone" class="formValue" id="phone" placeholder="Enter your phone number">
+            </div>
+            <div>
+                <label for="address">Home Address <span>*</span></label>
+                <input type="text" name="address" class="formValue" id="address" placeholder="Enter your home address">
+            </div>
+            <div>
+                <label for="password">Password <span>*</span></label>
+                <input type="password" name="password" class="formValue" id="password" placeholder="Enter your password">
+            </div>
+            <div>
+                <label for="confirmPassword">Confirm Password <span>*</span></label>
+                <input type="password" name="confirmPassword" class="formValue" id="confirmPassword" placeholder="Please confirm your password">
+            </div>
+            <div>
+                <label for="position">Desired Position <span>*</span></label>
+                <select name="position" class="formValue" id="position">
+                    <option value="">Please select</option>
+                    <option value="Web Design">Web Design</option>
+                    <option value="Online Marketing">Online Marketing</option>
+                    <option value="SEO/SEM">SEO/SEM</option>
+                    <option value="Advertising Agency Services">Advertising Agency Services</option>
+                  </select>
+            </div>
+            <input type="submit" value="Register">
+        </form>
+    </div>    
+    <div id="alert">
+    </div>
+    <script>
+        $(document).ready(function() {
+            function alert(message) {
+                $('#alert').append(`
+                    <div class="alertError" style="display: none;">
+                        <div>
+                            <span id="closeAlert">&times;</span>
+                            <h5>${message}</h5>
+                        </div>
+                        <p><img src="https://iconsplace.com/wp-content/uploads/_icons/ffe500/256/png/error-icon-19-256.png" /> Error Occured!</p>
+                    </div>
+                `);
+                $('#alert .alertError').fadeIn({complete: function() {
+                    setTimeout(() => {
+                        $(this).fadeOut(function() {
+                            $(this).remove();
+                        });
+                    }, 5000);
+                }});
+            }
+
+            function formInputError(index, type, label = false) {
+                const inputField = $(".formValue").eq(index).parent().children();
+                if(label) return inputField.eq(0).text().split('*')[0];
+                if(type === 'error') {
+                    inputField.eq(1).removeClass('successHighlightBorder');
+                    inputField.eq(1).addClass('alertHighlightBorder');
+                } 
+                if (type === 'clean') {
+                    inputField.eq(1).removeClass('successHighlightBorder');
+                    inputField.eq(1).removeClass('alertHighlightBorder');
+                }
+                
+            }
+
+            $(document).on('click', '#closeSuccessButton', function(){
+                $(this).parent().parent().remove();
+            });
+
+            $(document).on('click', '#closeAlert', function() {
+                $(this).parent().parent().fadeOut(function() {
+                    $(this).remove();
+                });
+            });
+
+            $(document).on('change', '.formValue', function() {
+                if(!$(this).val()) {
+                    $(this).removeClass('successHighlightBorder').addClass('alertHighlightBorder');
+                } else {
+                    $(this).removeClass('alertHighlightBorder').addClass('successHighlightBorder');
+                }
+            });
+
+            $('#form').submit(function(e) {
+                e.preventDefault();
+                let validForm = [];
+                for(let i = 0; i < $(".formValue").length;i++) {
+                    let input = formInputError(i, 'none', true);
+                    if(!$(".formValue").eq(i).val()) {
+                        alert(`Your <span class="alertHighlightText">${input}</span> should not be empty!`);
+                        formInputError(i, 'error');
+                        validForm.push(false);
+                    } else if ($(".formValue").eq(i).attr('name') === 'password' && $(".formValue").eq(i).val().length < 6) {
+                        alert(`Your <span class="alertHighlightText">Password</span> should be at least 6 characters long!`);
+                        formInputError(i, 'error');
+                        validForm.push(false);
+                    } else if ($(".formValue").eq(i).attr('name') === 'confirmPassword' && $(".formValue").eq(i).val() !== $("input[name='password']").val()) {
+                        alert(`Your <span class="alertHighlightText">Confirm Password</span> does not matched!`);
+                        formInputError(i, 'error');
+                        validForm.push(false);
+                    } else {
+                        validForm.push(true);
+                    }
+                }
+
+                if($.inArray(false, validForm) === -1) {
+                    $('body').prepend('<div class="loading"><img src="./loading.svg" alt=""></div>');
+                    setTimeout(() => {
+                        for(let i = 0; i < $(".formValue").length;i++) {
+                            $(".formValue").eq(i).val('');
+                            formInputError(i, 'clean');
+                        }
+                        $('body img').remove();
+                        $('body .loading').append('<div class="successMessage"><h2>Success!</h2><p>Your account has been registered. </p><img src="check.svg" alt=""><button id="closeSuccessButton">Continue</button></div>').hide().fadeIn();
+                    }, 1000);
+                }
+            })
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- <script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script> -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" ></script>
+		<title>Document</title>
+	</head>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			font-family: "Poppins";
+		}
+		button {
+			height: 30px !important;
+			margin-right: 50px;
+			width: 100px;
+		}
+		.container {
+			width: 600px;
+			margin: 0 auto;
+		}
+		.container > div {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			/* text-align: center; */
+			margin-bottom: 30px;
+		}
+		img {
+			/* display: none; */
+			height: 350px;
+			object-fit: contain;
+		}
+        .red {
+            color: red;
+        }
+        .show > div > p {
+            display: none;
+        }
+	</style>
+	<body>
+		<div class="container">
+			<div class="addClass">
+				<button id="addClass">AddClass</button>
+				<div>
+					<h1>AddClass</h1>
+					<p>Click the button to add class 'red' to this paragraph</p>
+				</div>
+			</div>
+			<div class="slidetoggle">
+				<button id="slidetoggle">Slidetoggle</button>
+				<div>
+					<h1>Slidetoggle</h1>
+					<p>Click the button to slidetoggle a hidden image</p>
+					<img id="showTheHiddenCorgi" src="https://images.pexels.com/photos/5377400/pexels-photo-5377400.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="corcutee" />
+				</div>
+			</div>
+			<div class="append">
+				<button id="append">Append</button>
+				<div>
+					<h1>Append</h1>
+					<p>Click the button to append new corgi with his hooman</p>
+				</div>
+			</div>
+            <div class="hide">
+				<button id="hide">Hide</button>
+				<div>
+					<h1>Hide</h1>
+					<p>Click the button to hide the brave corgi</p>
+                    <img src="https://images.pexels.com/photos/3649170/pexels-photo-3649170.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
+				</div>
+			</div>
+            <div class="show">
+				<button id="show">Show</button>
+				<div>
+					<h1>Show</h1>
+                    <p>Click the button to show the sleeping corgi</p>
+					<img style="display: none;" src="https://images.pexels.com/photos/4641862/pexels-photo-4641862.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
+				</div>
+			</div>
+            <div class="toggle">
+				<button id="toggle">Toggle</button>
+				<div>
+					<h1>Toggle</h1>
+                    <p>Click the button to Toggle the working corgi</p>
+					<img src="https://images.pexels.com/photos/5122188/pexels-photo-5122188.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
+				</div>
+			</div>
+            <div class="slideDown">
+				<button id="slideDown">SlideDown</button>
+				<div>
+					<h1>SlideDown</h1>
+                    <p>Click the button to slideDown the corgi eating pancakes</p>
+					<img style="display: none;" src="https://images.pexels.com/photos/5377401/pexels-photo-5377401.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="">
+				</div>
+			</div>
+            <div class="slideUp">
+				<button id="slideUp">SlideUp</button>
+				<div>
+					<h1>SlideUp</h1>
+                    <p>Click the button to SlideUp the sleepy corgi</p>
+					<img src="https://images.pexels.com/photos/5377406/pexels-photo-5377406.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
+				</div>
+			</div>
+            <div class="fadeIn">
+				<button id="fadeIn">FadeIn</button>
+				<div>
+					<h1>FadeIn</h1>
+                    <p>Click the button to FadeIn the corgi's cute paws</p>
+					<img style="display: none;" src="https://images.pexels.com/photos/4641869/pexels-photo-4641869.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
+				</div>
+			</div>
+            <div class="fadeOut">
+				<button id="fadeOut">FadeOut</button>
+				<div>
+					<h1>FadeOut</h1>
+                    <p>Click the button to FadeOut corgi and his friends</p>
+					<img src="https://images.pexels.com/photos/5377398/pexels-photo-5377398.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
+				</div>
+			</div>
+            <div class="before">
+				<button id="before">Before</button>
+				<div>
+					<h1>Before</h1>
+                    <p>Click the button to add corgi and his grand parents before paragraph</p>
+				</div>
+			</div>
+            <div class="after">
+				<button id="after">After</button>
+				<div>
+					<h1>After</h1>
+                    <p>Click the button to add corgi and his white candle after paragraph</p>
+				</div>
+			</div>
+            <div class="html">
+				<button id="html">Html</button>
+				<div>
+					<h1>Html</h1>
+                    <p>Click the button to change the content of div to corgi and his loneliness</p>
+				</div>
+			</div>
+            <div class="attr">
+				<button id="attr">Attr</button>
+				<div>
+					<h1>Attr</h1>
+                    <p>Click the button to change the attribute of the corgi and his bestfriend Choro</p>
+					<img src="https://images.pexels.com/photos/5122175/pexels-photo-5122175.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
+				</div>
+			</div>
+            <div class="val">
+				<button id="val">Val</button>
+				<div>
+					<h1>Val</h1>
+                    <input type="text" value="I love Corgis">
+                    <p>Click the button to get the input value</p>
+					<h2></h2>
+				</div>
+			</div>
+            <div class="text">
+				<button id="text">Text</button>
+				<div>
+					<h1>Text</h1>
+                    <p>Click the button to add text</p>
+					<h2></h2>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			$(document).ready(function () {
+				$("#addClass").click(function () {
+                    $(".addClass div p").addClass("red");
+                });
+				$("#slidetoggle").click(function () {
+					$("#showTheHiddenCorgi").slideToggle();
+				});
+				$("#append").click(function () {
+					$(".append div").append('<img src="https://images.pexels.com/photos/4957118/pexels-photo-4957118.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">');
+				});
+                $("#hide").click(function () {
+					$(".hide div img").hide();
+				});
+                $("#show").click(function () {
+					$(".show div img").show();
+				});
+                $("#toggle").click(function () {
+					$(".toggle div img").toggle();
+				});
+                $("#slideDown").click(function () {
+					$(".slideDown div img").slideDown();
+				});
+                $("#slideUp").click(function () {
+					$(".slideUp div img").slideUp();
+				});
+                $("#fadeIn").click(function () {
+					$(".fadeIn div img").fadeIn();
+				});
+                $("#fadeOut").click(function () {
+					$(".fadeOut div img").fadeOut();
+				});
+                $("#before").click(function () {
+					$(".before div p").before(`<img src="https://images.pexels.com/photos/5961943/pexels-photo-5961943.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">`);
+				});
+                $("#after").click(function () {
+					$(".after div p").after(`<img src="https://images.pexels.com/photos/4641850/pexels-photo-4641850.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">`);
+				});
+                $("#html").click(function () {
+					$(".html div").html(`<img src="https://images.pexels.com/photos/1846409/pexels-photo-1846409.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="">`);
+				});
+                $("#attr").click(function () {
+					$(".attr div img").attr(`style`, 'height: 1000px');
+				});
+                $("#val").click(function () {
+                    const corgiVal = $(".val div input").val();
+					$(".val div h2").html(corgiVal);
+				});
+                $("#text").click(function () {
+					$(".text div h2").text('I love Corgi');
+				});
+			});
+		</script>
+	</body>
+</html>
