@@ -171,3 +171,6 @@ body::-webkit-scrollbar-thumb
 .jqueryExamples > div {
     display: none;
 }
+.ParticlesJs {
+    width: 100%;
+}
