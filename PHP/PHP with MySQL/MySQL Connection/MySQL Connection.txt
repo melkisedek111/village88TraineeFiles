@@ -1,0 +1,3 @@
+ERROR NO 2002 = Warning: mysqli::__construct(): php_network_getaddresses: getaddrinfo failed: No such host is known. 
+ERROR NO 1045 = Warning: mysqli::__construct(): (HY000/1045): Access denied for user 'roo1t'@'localhost' (using password: YES) 
+ERRO NO 1049 = Warning: mysqli::__construct(): (HY000/1049): Unknown database
